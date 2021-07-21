@@ -121,7 +121,9 @@ class PortMonthlyInstallationsSerializer(serializers.Serializer):
         if not is_valid:
             return PortInstallation.objects.none()
         today_day = datetime.datetime.now().day
-        last_12_months = datetime.datetime.now(tz=datetime.timezone.utc) - datetime.timedelta(days=int(today_day) + 365)
+        last_12_months = datetime.datetime.now(tz=datetime.timezone.utc) - datetime.timedelta(365)
+        last_12_months.replace(day=1)
+
         result = PortInstallation.objects \
             .only('id') \
             .filter(port__iexact=self.port_name, submission__timestamp__gte=last_12_months) \
