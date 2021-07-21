@@ -33,7 +33,8 @@ def stats(request):
     end_date = datetime.datetime.now(tz=datetime.timezone.utc) - datetime.timedelta(days=days_ago)
     start_date = end_date - datetime.timedelta(days=days)
     today_day = datetime.datetime.now().day
-    last_12_months = datetime.datetime.now(tz=datetime.timezone.utc) - datetime.timedelta(days=int(today_day) + 365)
+    last_12_months = datetime.datetime.now(tz=datetime.timezone.utc) - datetime.timedelta(365)
+    last_12_months.replace(day=1)
 
     current_week = datetime.datetime.today().isocalendar()[1]
     all_submissions = Submission.objects.all().only('id')
